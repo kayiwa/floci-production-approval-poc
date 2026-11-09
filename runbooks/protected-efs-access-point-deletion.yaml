@@ -1,0 +1,106 @@
+---
+# DESIGN ONLY. Synthetic account, nonexistent roles/functions, and an unconditional
+# first-step abort. Do not remove that guard or deploy this to an AWS account.
+schemaVersion: '0.3'
+description: 'NON-DEPLOYABLE design: independently approved exact EFS access-point deletion'
+assumeRole: arn:aws:iam::000000000000:role/NOT_DEPLOYED-ApprovalAutomation
+parameters:
+  RequestId:
+    type: String
+    description: ID of an immutable request in trusted storage; never an ARN or shell command.
+    allowedPattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+mainSteps:
+  - name: designOnlyAbort
+    action: aws:executeScript
+    timeoutSeconds: 30
+    onFailure: Abort
+    inputs:
+      Runtime: python3.11
+      Handler: block
+      Script: |-
+        def block(events, context):
+            raise RuntimeError("DESIGN ONLY: production identity, quorum and execution controls are unvalidated")
+  - name: validateRequest
+    action: aws:invokeLambdaFunction
+    timeoutSeconds: 60
+    onFailure: Abort
+    inputs:
+      FunctionName: arn:aws:lambda:us-east-1:000000000000:function:NOT_DEPLOYED-ValidateApprovalRequest
+      Payload: '{"request_id":"{{ RequestId }}"}'
+  - name: decodeRequestHash
+    action: aws:executeScript
+    timeoutSeconds: 30
+    onFailure: Abort
+    inputs:
+      Runtime: python3.11
+      Handler: decode
+      InputPayload:
+        raw: '{{ validateRequest.Payload }}'
+        request_id: '{{ RequestId }}'
+      Script: |-
+        import json
+        import re
+        def decode(events, context):
+            data = json.loads(events["raw"])
+            if data.get("request_id") != events["request_id"] or not re.fullmatch(r"[0-9a-f]{64}", data.get("request_hash", "")):
+                raise ValueError("Invalid validation result")
+            return {"request_hash": data["request_hash"]}
+    outputs:
+      - Name: RequestHash
+        Selector: $.Payload.request_hash
+        Type: String
+  - name: independentApprovals
+    action: aws:approve
+    timeoutSeconds: 300
+    onFailure: Abort
+    inputs:
+      NotificationArn: arn:aws:sns:us-east-1:000000000000:AutomationProductionApproval
+      Message: 'Approve exact request {{ RequestId }}, immutable hash {{ decodeRequestHash.RequestHash }}'
+      MinRequiredApprovals: 2
+      Approvers:
+        - arn:aws:iam::000000000000:user/NOT_DEPLOYED-ApproverA
+        - arn:aws:iam::000000000000:user/NOT_DEPLOYED-ApproverB
+        - arn:aws:iam::000000000000:user/NOT_DEPLOYED-ApproverC
+  - name: postApprovalValidation
+    action: aws:invokeLambdaFunction
+    timeoutSeconds: 60
+    onFailure: Abort
+    inputs:
+      FunctionName: arn:aws:lambda:us-east-1:000000000000:function:NOT_DEPLOYED-ValidateIndependentHumans
+      Payload: '{"request_id":"{{ RequestId }}","request_hash":"{{ decodeRequestHash.RequestHash }}"}'
+  - name: deleteExactApprovedAccessPoint
+    action: aws:invokeLambdaFunction
+    timeoutSeconds: 60
+    onFailure: Abort
+    inputs:
+      # This handler independently checks all approvals, atomically claims the
+      # request, re-reads EFS and calls DeleteAccessPoint. SSM step order alone
+      # must never authorize deletion. Automation role has no EFS delete grant.
+      FunctionName: arn:aws:lambda:us-east-1:000000000000:function:NOT_DEPLOYED-GuardedDeleteEfsAccessPoint
+      Payload: '{"request_id":"{{ RequestId }}","request_hash":"{{ decodeRequestHash.RequestHash }}"}'
+  - name: verifyDeletionReceipt
+    action: aws:executeScript
+    timeoutSeconds: 30
+    onFailure: Abort
+    inputs:
+      Runtime: python3.11
+      Handler: verify
+      InputPayload:
+        raw: '{{ deleteExactApprovedAccessPoint.Payload }}'
+        request_id: '{{ RequestId }}'
+        request_hash: '{{ decodeRequestHash.RequestHash }}'
+      Script: |-
+        import json
+        def verify(events, context):
+            receipt = json.loads(events["raw"])
+            if receipt.get("request_id") != events["request_id"] or receipt.get("payload_hash") != events["request_hash"] or receipt.get("outcome") != "deleted":
+                raise ValueError("Failed or mismatched protected operation")
+            return {"verified": True}
+  - name: persistAuditEvidence
+    action: aws:invokeLambdaFunction
+    timeoutSeconds: 60
+    onFailure: Abort
+    isEnd: true
+    inputs:
+      FunctionName: arn:aws:lambda:us-east-1:000000000000:function:NOT_DEPLOYED-ExportApprovalReceipt
+      Payload: '{"request_id":"{{ RequestId }}"}'

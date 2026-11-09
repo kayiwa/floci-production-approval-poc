@@ -1,0 +1,16 @@
+{
+  "observed_date": "2026-11-09",
+  "container": "floci-production-approval-poc",
+  "container_label": {"io.approval-poc.project": "production-approval"},
+  "floci_version_from_image_label": "2.4.0",
+  "image": "docker.io/floci/floci@sha256:3df9677724e36251801f3828ea0bdcc2818afa96d8ec53f1741eaffdaeb990e1",
+  "image_revision": "9be236e2890c2042a6bb819f1a9228be996acd90",
+  "image_created": "2026-10-31T05:44:14Z",
+  "architecture": "aarch64",
+  "published_port": "127.0.0.1:4570->4566/tcp",
+  "iam_enforcement_option": "FLOCI_SERVICES_IAM_ENFORCEMENT_ENABLED=true",
+  "credential_or_config_mounts": [],
+  "python": "3.15.2",
+  "boto3": "1.43.126",
+  "pytest": "9.2.0"
+}

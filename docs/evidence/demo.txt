@@ -1,0 +1,50 @@
+Created exact target: arn:aws:elasticfilesystem:us-east-1:000000000000:access-point/fsap-00833b03654b4be29
+Request: 12746980-fe72-4476-a0b0-a82e45404312 payload hash: 8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84
+ALLOWED REQUESTED -> PENDING_APPROVAL: authenticated requester; exact disposable target
+DENIED execution without approval control=request_not_approved_or_already_consumed
+DENIED requester self-approval control=self_approval_forbidden
+ALLOWED first approval: person-blair; state=PENDING_APPROVAL; quorum incomplete
+DENIED execution after one approval control=request_not_approved_or_already_consumed
+ALLOWED PENDING_APPROVAL -> APPROVED: person-casey; two distinct authorized non-requesters
+ALLOWED APPROVED -> EXECUTING -> COMPLETED: atomic one-attempt claim; target revalidated; Floci deletion confirmed
+DENIED replay after completion control=request_not_approved_or_already_consumed
+AUDIT HISTORY
+{"actor": "person-alex", "evidence_hash": "aa4ee4e0a787ec68bb3240fa1e20dda27cb57bf9bc7028f680de1270d88c0eb7", "from": null, "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 1, "timestamp": "2026-11-09T17:03:40.112643+00:00", "to": "REQUESTED", "type": "transition"}
+{"actor": "person-alex", "evidence_hash": "34a3523411d2ee4367b43e10419ca676cd8c7cd374667754d93aeeeb14b63915", "from": "REQUESTED", "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 2, "timestamp": "2026-11-09T17:03:40.112643+00:00", "to": "PENDING_APPROVAL", "type": "transition"}
+{"actor": "service-executor", "evidence_hash": "3db6f1217010b53d4d30d31f2c8964e981051fcb210dde6a559305cc54335302", "reason": "request_not_approved_or_already_consumed", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 3, "timestamp": "2026-11-09T17:03:40.114816+00:00", "type": "denied"}
+{"actor": "person-alex", "evidence_hash": "8c2c5df82a4cc3b3e7536b74955c01ab5191a777230007de02c182f82f928d56", "reason": "self_approval_forbidden", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 4, "timestamp": "2026-11-09T17:03:40.115935+00:00", "type": "denied"}
+{"actor": "person-blair", "decision": "approve", "evidence_hash": "49b02a925012eb3e722714b12ef589560f05e6e7103880a56950fc2ab0eab909", "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 5, "timestamp": "2026-11-09T17:03:40.117259+00:00", "type": "decision"}
+{"actor": "service-executor", "evidence_hash": "fa81c7e55164ceee5efe702d87f45922001a7f6412e338f13df1744918307976", "reason": "request_not_approved_or_already_consumed", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 6, "timestamp": "2026-11-09T17:03:40.118569+00:00", "type": "denied"}
+{"actor": "person-casey", "decision": "approve", "evidence_hash": "6d1506e103b5276ce4825c9d06c192242b94a5341b2bc0f0b7580e456eaa4ab2", "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 7, "timestamp": "2026-11-09T17:03:40.119753+00:00", "type": "decision"}
+{"actor": "workflow", "evidence_hash": "b1f52b34a652ad2537236afbb1af21fb7d9c244b20afbb836de955fb3cb8ab44", "from": "PENDING_APPROVAL", "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 8, "timestamp": "2026-11-09T17:03:40.119814+00:00", "to": "APPROVED", "type": "transition"}
+{"actor": "service-executor", "evidence_hash": "bfcfdb1a941285cb6437e856dc17988eb249468fc5f4b2c8b4558b75092d983e", "from": "APPROVED", "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 9, "timestamp": "2026-11-09T17:03:40.121079+00:00", "to": "EXECUTING", "type": "transition"}
+{"actor": "service-executor", "evidence_hash": "d384b3c8f7e1a1c8351675f0b9234599e6268c7bbf3f37e93cce4e90fef6012f", "from": "EXECUTING", "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 10, "timestamp": "2026-11-09T17:03:40.184628+00:00", "to": "EXECUTING", "type": "transition"}
+{"actor": "service-executor", "evidence_hash": "ab273f7eafaf2199ae3ff8829f1ac5ff66e24170bea95bdaccabed3a7c5d4879", "from": "EXECUTING", "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 11, "timestamp": "2026-11-09T17:03:40.421004+00:00", "to": "COMPLETED", "type": "transition"}
+{"actor": "service-executor", "evidence_hash": "fbeaba158c1d9d76f4d14fd4385fec6e0da36e2e372c89de37f4af829d87d07c", "reason": "request_not_approved_or_already_consumed", "request_id": "12746980-fe72-4476-a0b0-a82e45404312", "seq": 12, "timestamp": "2026-11-09T17:03:40.474764+00:00", "type": "denied"}
+DURABLE RECEIPT {
+  "access_point_id": "fsap-00833b03654b4be29",
+  "account": "000000000000",
+  "api_submitted": true,
+  "approvers": [
+    "person-blair",
+    "person-casey"
+  ],
+  "claim_id": "1ba69894-8589-4151-987c-028c5527bfa9",
+  "claimed_at": "2026-11-09T17:03:40.121072+00:00",
+  "endpoint": "http://127.0.0.1:4570",
+  "executor": "service-executor",
+  "filesystem_id": "fs-7d0ae76ce30047bf9",
+  "operation": "DeleteEfsAccessPoint",
+  "payload_hash": "8daaa9174c65e3bbcdfdc721eed9968e430f2441c6ac563a4c537fc5f8672b84",
+  "policy_version": "local-two-human-v1",
+  "region": "us-east-1",
+  "request_id": "12746980-fe72-4476-a0b0-a82e45404312",
+  "requester": "person-alex",
+  "aws_request_id": "77ad2907-7117-45fd-b780-203144a545bf",
+  "http_status": 204,
+  "execution_role": "arn:aws:sts::000000000000:assumed-role/poc-executor-f94f6bc1e8b87ba44d6e5f262d1e27bd/poc-12746980-fe72-4476-a0b0-a82e45404312",
+  "completed_at": "2026-11-09T17:03:40.420041+00:00",
+  "outcome": "deleted",
+  "resource_revalidated": true,
+  "target_absent": true
+}

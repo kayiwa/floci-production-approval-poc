@@ -1,0 +1,11 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "elasticfilesystem:DeleteAccessPoint",
+      "Resource": "arn:aws:elasticfilesystem:us-east-1:000000000000:access-point/fsap-00000000000000001",
+      "Condition": {"StringEquals": {"aws:ResourceTag/ApprovalPOC": "disposable", "aws:ResourceTag/PocInstance": "SYNTHETIC_INSTANCE"}}
+    }
+  ]
+}

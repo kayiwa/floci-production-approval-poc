@@ -1,0 +1,7 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {"Effect": "Allow", "Action": "ssm:SendAutomationSignal", "Resource": "arn:aws:ssm:us-east-1:000000000000:automation-execution/SYNTHETIC_EXECUTION"},
+    {"Effect": "Deny", "Action": ["elasticfilesystem:DeleteAccessPoint", "sts:AssumeRole", "iam:*", "ssm:CreateDocument", "ssm:UpdateDocument", "ssm:UpdateDocumentDefaultVersion", "logs:Delete*", "logs:PutLogEvents"], "Resource": "*"}
+  ]
+}

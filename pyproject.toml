@@ -1,0 +1,11 @@
+[project]
+name = "floci-production-approval-poc"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["boto3>=1.35", "PyYAML>=6.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["integration: uses only the pinned loopback Floci instance"]

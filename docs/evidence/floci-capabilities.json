@@ -1,0 +1,196 @@
+{
+  "floci_version": "2.4.0",
+  "image_digest": "sha256:3df9677724e36251801f3828ea0bdcc2818afa96d8ec53f1741eaffdaeb990e1",
+  "endpoint": "http://127.0.0.1:4570",
+  "account": "000000000000",
+  "region": "us-east-1",
+  "operations": {
+    "efs.CreateFileSystem": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 201
+    },
+    "efs.CreateAccessPoint": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "efs.DescribeAccessPoints": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "efs.DeleteAccessPoint": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 204
+    },
+    "efs.DescribeDeletedAccessPoint": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "iam.CreatePolicy": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "iam.SimulateCustomPolicy": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "iam.CreateUser": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "iam.PutUserPolicy": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "iam.CreateAccessKey": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "iam.EffectiveDeny.EfsDelete": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 204
+    },
+    "iam.CreateRole": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "sts.GetCallerIdentity": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "sts.AssumeRole": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "iam.EffectiveDeny.AssumeRole": {
+      "implemented": true,
+      "call_succeeded": false,
+      "code": "AccessDenied",
+      "message": "User is not authorized to perform: sts:AssumeRole"
+    },
+    "ssm.PutParameter": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "ssm.CreateDocument": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "ssm.StartAutomationExecution": {
+      "implemented": false,
+      "call_succeeded": false,
+      "code": "UnsupportedOperation",
+      "message": "Operation StartAutomationExecution is not supported."
+    },
+    "ssm.SendAutomationSignal": {
+      "implemented": false,
+      "call_succeeded": false,
+      "code": "UnsupportedOperation",
+      "message": "Operation SendAutomationSignal is not supported."
+    },
+    "logs.CreateLogGroup": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "logs.CreateLogStream": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "logs.PutLogEvents": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "logs.GetLogEvents": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "sns.CreateTopic": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "sns.Publish": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "cloudtrail.CreateTrail": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "cloudtrail.StartLogging": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "cloudtrail.LookupEvents": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "dynamodb.CreateTable": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "dynamodb.PutItem": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 200
+    },
+    "dynamodb.ConditionalDuplicate": {
+      "implemented": true,
+      "call_succeeded": false,
+      "code": "ConditionalCheckFailedException",
+      "message": "The conditional request failed"
+    },
+    "efs.DeleteFileSystem": {
+      "implemented": true,
+      "call_succeeded": true,
+      "http_status": 204
+    }
+  },
+  "observed_at": "2026-11-09T16:56:14.567917+00:00",
+  "efs_sample": {
+    "ClientToken": "poc-probe-7cfa3f891ec3",
+    "Tags": [
+      {
+        "Key": "ApprovalPOC",
+        "Value": "disposable"
+      }
+    ],
+    "AccessPointId": "fsap-37590a4d37884aebb",
+    "AccessPointArn": "arn:aws:elasticfilesystem:us-east-1:000000000000:access-point/fsap-37590a4d37884aebb",
+    "FileSystemId": "fs-3b0aa59d77284106a",
+    "OwnerId": "000000000000",
+    "LifeCycleState": "available"
+  },
+  "efs_deleted_absent": true,
+  "iam_simulated_decision": "explicitDeny",
+  "efs_direct_deny_enforced": false,
+  "ssm_aws_approve_executed": false,
+  "logs_round_trip": true,
+  "cloudtrail_returned_events": 0,
+  "cloudtrail_event_names": [],
+  "dynamodb_condition_enforced": true
+}
